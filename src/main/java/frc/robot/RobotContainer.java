@@ -6,11 +6,16 @@ package frc.robot;
 
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.commands.PathPlannerAuto;
 
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+
 import static edu.wpi.first.units.Units.MetersPerSecond;
 import static edu.wpi.first.units.Units.RadiansPerSecond;
 import static edu.wpi.first.units.Units.RotationsPerSecond;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -34,9 +39,26 @@ public class RobotContainer {
     private final CommandXboxController joystick = new CommandXboxController(0);
 
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
+    private static final String kNoAuto = "NoAuto";
+    private static final String kCycleLeft = "CycleLeft";
+    private static final String kCycleRight = "CycleRight";
+    private static final String kCycleCenter = "CycleCenter";
+    private final SendableChooser<String> autoChooser = new SendableChooser<>();
+    private final SendableChooser<String> numCyclesChooser = new SendableChooser<>();
 
     public RobotContainer() {
         configureBindings();
+        autoChooser.setDefaultOption("No Auto", kNoAuto);
+        autoChooser.addOption("Cycle Left", kCycleLeft);
+        autoChooser.addOption("Cycle Right", kCycleRight);
+        autoChooser.addOption("Cycle Center", kCycleCenter);
+        SmartDashboard.putData(autoChooser);
+
+        numCyclesChooser.setDefaultOption("One Cycle", "1");
+        numCyclesChooser.addOption("Two Cycles", "2");
+        numCyclesChooser.addOption("Three Cycles", "3");
+        numCyclesChooser.addOption("Four Cycles", "4");
+        SmartDashboard.putData(numCyclesChooser);
     }
 
     private void configureBindings() {
@@ -70,6 +92,12 @@ public class RobotContainer {
     }
 
     public Command getAutonomousCommand() {
-        return Commands.print("No autonomous command configured");
+        String autoSelected = autoChooser.getSelected();
+        String cyclesSelected = numCyclesChooser.getSelected();
+        if (autoSelected.equals(kCycleCenter)){
+            cyclesSelected = "1";
+        }
+        PathPlannerAuto pathAuto = new PathPlannerAuto(autoSelected + cyclesSelected);
+        return pathAuto;
     }
 }
