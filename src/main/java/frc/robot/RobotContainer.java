@@ -94,6 +94,8 @@ public class RobotContainer {
     public Command getAutonomousCommand() {
         String autoSelected = autoChooser.getSelected();
         String cyclesSelected = numCyclesChooser.getSelected();
+
+        // Note: Cycle Center only has 1 cycle.
         if (autoSelected.equals(kCycleCenter)){
             cyclesSelected = "1";
         }
