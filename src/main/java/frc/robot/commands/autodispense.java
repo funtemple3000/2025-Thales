@@ -8,27 +8,32 @@ public class autodispense extends Command{
     private feeder dispenser;
     private Timer timer;
 
+    // Constructor
     public autodispense(Timer t, feeder d){
         this.dispenser = d;
         this.timer = t;
     }
 
+    // starting code at start of call per use case
     @Override
     public void initialize(){
         timer.reset();
-        timer.start();
+        timer.start(    );
     }
 
+    // actual command
     @Override
     public void execute(){
         dispenser.dispense();
     }
 
+    // in case of an interuption if interrupted boolean changed will halt action
     @Override
     public void end(boolean interrupted){
         dispenser.stop();
     }
 
+    // Expected completion time of 1 second, ends command
     @Override
     public boolean isFinished(){
         return timer.hasElapsed(1);
