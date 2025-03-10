@@ -43,6 +43,7 @@ public class RobotContainer {
     private static final String kCycleLeft = "CycleLeft";
     private static final String kCycleRight = "CycleRight";
     private static final String kCycleCenter = "CycleCenter";
+    private static final String kPracticeAuto = "PracticeAuto";
     private final SendableChooser<String> autoChooser = new SendableChooser<>();
     private final SendableChooser<String> numCyclesChooser = new SendableChooser<>();
 
@@ -52,6 +53,7 @@ public class RobotContainer {
         autoChooser.addOption("Cycle Left", kCycleLeft);
         autoChooser.addOption("Cycle Right", kCycleRight);
         autoChooser.addOption("Cycle Center", kCycleCenter);
+        autoChooser.addOption("Practice Auto (Practice Only)", kPracticeAuto);
         SmartDashboard.putData(autoChooser);
 
         numCyclesChooser.setDefaultOption("One Cycle", "1");
@@ -98,6 +100,9 @@ public class RobotContainer {
         // Note: Cycle Center only has 1 cycle.
         if (autoSelected.equals(kCycleCenter)){
             cyclesSelected = "1";
+        }
+        if (autoSelected.equals(kPracticeAuto)){
+            cyclesSelected = ""; // Practice auto does not have "cycles"
         }
         PathPlannerAuto pathAuto = new PathPlannerAuto(autoSelected + cyclesSelected);
         return pathAuto;
