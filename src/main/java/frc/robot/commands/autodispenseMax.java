@@ -4,39 +4,34 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.feeder;
 import edu.wpi.first.wpilibj.Timer;
 
-public class autodispense extends Command{
+public class autodispenseMax extends Command{
     private feeder dispenser;
     private Timer timer;
 
-    // Constructor
-    public autodispense(Timer t, feeder d){
+    public autodispenseMax(Timer t, feeder d){
         this.dispenser = d;
         this.timer = t;
     }
 
-    // starting code at start of call per use case
     @Override
     public void initialize(){
         timer.reset();
-        timer.start(    );
+        timer.start();
     }
 
-    // actual command
     @Override
     public void execute(){
-        dispenser.dispense();
+        dispenser.gimmemorpowa();
+        // changed dispenser use case
     }
 
-    // in case of an interuption if interrupted boolean changed will halt action
     @Override
     public void end(boolean interrupted){
         dispenser.stop();
     }
 
-    // Expected completion time of 1 second, ends command
     @Override
     public boolean isFinished(){
         return timer.hasElapsed(1);
     }
 }
-
