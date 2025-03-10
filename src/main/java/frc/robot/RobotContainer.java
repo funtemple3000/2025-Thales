@@ -6,6 +6,7 @@ package frc.robot;
 
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
+import com.ctre.phoenix6.hardware.TalonFX;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
@@ -22,6 +23,8 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
+import frc.robot.subsystems.feeder;
+
 
 public class RobotContainer {
     private double MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
@@ -46,6 +49,8 @@ public class RobotContainer {
     private static final String kPracticeAuto = "PracticeAuto";
     private final SendableChooser<String> autoChooser = new SendableChooser<>();
     private final SendableChooser<String> numCyclesChooser = new SendableChooser<>();
+
+    public final feeder dispenser = new feeder(new TalonFX(51));
 
     public RobotContainer() {
         configureBindings();
@@ -86,6 +91,25 @@ public class RobotContainer {
         joystick.back().and(joystick.x()).whileTrue(drivetrain.sysIdDynamic(Direction.kReverse));
         joystick.start().and(joystick.y()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kForward));
         joystick.start().and(joystick.x()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kReverse));
+
+        joystick.rightBumper().onTrue(
+            Commands.runOnce(()->
+            dispenser.dispense())
+        );
+
+        joystick.rightBumper().onFalse(
+            Commands.runOnce(()->
+            dispenser.stop())
+        );
+        joystick.x().onTrue(
+            Commands.runOnce(()->
+            dispenser.gimmemorpowa())
+        );
+
+        joystick.x().onFalse(
+            Commands.runOnce(()->
+            dispenser.stop())
+        );
 
         // reset the field-centric heading on left bumper press
         joystick.leftBumper().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
