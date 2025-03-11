@@ -11,15 +11,33 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "autodispense"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "TopLeftToSource"
           }
         },
         {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.5
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "SourceToBottomLeft"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "autodispense"
           }
         }
       ]

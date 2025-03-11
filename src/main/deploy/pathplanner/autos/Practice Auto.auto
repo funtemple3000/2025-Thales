@@ -17,6 +17,12 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "autodispense"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "BottomCenterToLeftSource (Practice Path)"
@@ -26,6 +32,12 @@
           "type": "path",
           "data": {
             "pathName": "LeftSourceToBottomCenter"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "autodispense"
           }
         }
       ]

@@ -9,6 +9,12 @@
           "data": {
             "pathName": "GoToReefCenter"
           }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "autodispense"
+          }
         }
       ]
     }

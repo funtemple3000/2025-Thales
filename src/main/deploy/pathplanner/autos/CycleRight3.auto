@@ -11,9 +11,35 @@
           }
         },
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "TopRightToSource"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "autodispense"
+                }
+              },
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 0.25
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "TopRightToSource"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
           }
         },
         {
@@ -23,15 +49,47 @@
           }
         },
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "BottomRightToSource"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "autodispense"
+                }
+              },
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 0.25
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "BottomRightToSource"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
           }
         },
         {
           "type": "path",
           "data": {
             "pathName": "RightSourceToBottomCenter"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "autodispense"
           }
         }
       ]
