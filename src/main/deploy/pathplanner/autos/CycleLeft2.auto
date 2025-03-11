@@ -1,0 +1,49 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "GoToReefLeft"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "autodispense"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "TopLeftToSource"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.5
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "SourceToBottomLeft"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "autodispense"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": null,
+  "choreoAuto": false
+}

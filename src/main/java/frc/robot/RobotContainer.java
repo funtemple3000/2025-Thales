@@ -7,11 +7,17 @@ package frc.robot;
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.commands.PathPlannerAuto;
+import com.pathplanner.lib.auto.NamedCommands;
 
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+
 import static edu.wpi.first.units.Units.MetersPerSecond;
 import static edu.wpi.first.units.Units.RadiansPerSecond;
 import static edu.wpi.first.units.Units.RotationsPerSecond;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -19,6 +25,8 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.feeder;
+import frc.robot.commands.autodispense;
+import frc.robot.commands.autodispenseMax;
 
 
 public class RobotContainer {
@@ -37,11 +45,34 @@ public class RobotContainer {
     private final CommandXboxController joystick = new CommandXboxController(0);
 
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
+    private static final String kNoAuto = "NoAuto";
+    private static final String kCycleLeft = "CycleLeft";
+    private static final String kCycleRight = "CycleRight";
+    private static final String kCycleCenter = "CycleCenter";
+    private static final String kPracticeAuto = "PracticeAuto";
+    private final SendableChooser<String> autoChooser = new SendableChooser<>();
+    private final SendableChooser<String> numCyclesChooser = new SendableChooser<>();
 
     public final feeder dispenser = new feeder(new TalonFX(51));
+    public final autodispense m_autodispense = new autodispense(dispenser);
+    public final autodispenseMax m_autodispenseMax = new autodispenseMax(dispenser);
 
     public RobotContainer() {
         configureBindings();
+        autoChooser.setDefaultOption("No Auto", kNoAuto);
+        autoChooser.addOption("Cycle Left", kCycleLeft);
+        autoChooser.addOption("Cycle Right", kCycleRight);
+        autoChooser.addOption("Cycle Center", kCycleCenter);
+        autoChooser.addOption("Practice Auto (Practice Only)", kPracticeAuto);
+        SmartDashboard.putData(autoChooser);
+
+        numCyclesChooser.setDefaultOption("One Cycle", "1");
+        numCyclesChooser.addOption("Two Cycles", "2");
+        numCyclesChooser.addOption("Three Cycles", "3");
+        SmartDashboard.putData(numCyclesChooser);
+
+        NamedCommands.registerCommand("autodispense", m_autodispense);
+        NamedCommands.registerCommand("autodispenseMax", m_autodispenseMax);
     }
 
     private void configureBindings() {
@@ -94,6 +125,17 @@ public class RobotContainer {
     }
 
     public Command getAutonomousCommand() {
-        return Commands.print("No autonomous command configured");
+        String autoSelected = autoChooser.getSelected();
+        String cyclesSelected = numCyclesChooser.getSelected();
+
+        // Note: Cycle Center only has 1 cycle.
+        if (autoSelected.equals(kCycleCenter)){
+            cyclesSelected = "1";
+        }
+        if (autoSelected.equals(kPracticeAuto)){
+            cyclesSelected = ""; // Practice auto does not have "cycles"
+        }
+        PathPlannerAuto pathAuto = new PathPlannerAuto(autoSelected + cyclesSelected);
+        return pathAuto;
     }
 }

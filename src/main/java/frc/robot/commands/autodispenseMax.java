@@ -1,16 +1,16 @@
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.feeder;
-import edu.wpi.first.wpilibj.Timer;
 
 public class autodispenseMax extends Command{
     private feeder dispenser;
     private Timer timer;
 
-    public autodispenseMax(Timer t, feeder d){
+    public autodispenseMax(feeder d){
         this.dispenser = d;
-        this.timer = t;
+        this.timer = new Timer();
     }
 
     @Override

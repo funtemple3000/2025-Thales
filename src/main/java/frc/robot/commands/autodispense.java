@@ -9,9 +9,9 @@ public class autodispense extends Command{
     private Timer timer;
 
     // Constructor
-    public autodispense(Timer t, feeder d){
+    public autodispense(feeder d){
         this.dispenser = d;
-        this.timer = t;
+        this.timer = new Timer();
     }
 
     // starting code at start of call per use case
