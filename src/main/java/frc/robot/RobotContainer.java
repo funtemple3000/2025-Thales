@@ -64,7 +64,6 @@ public class RobotContainer {
         numCyclesChooser.setDefaultOption("One Cycle", "1");
         numCyclesChooser.addOption("Two Cycles", "2");
         numCyclesChooser.addOption("Three Cycles", "3");
-        numCyclesChooser.addOption("Four Cycles", "4");
         SmartDashboard.putData(numCyclesChooser);
     }
 
