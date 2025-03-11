@@ -9,6 +9,7 @@ import com.ctre.phoenix6.swerve.SwerveRequest;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.commands.PathPlannerAuto;
+import com.pathplanner.lib.auto.NamedCommands;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -24,6 +25,8 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.feeder;
+import frc.robot.commands.autodispense;
+import frc.robot.commands.autodispenseMax;
 
 
 public class RobotContainer {
@@ -51,6 +54,8 @@ public class RobotContainer {
     private final SendableChooser<String> numCyclesChooser = new SendableChooser<>();
 
     public final feeder dispenser = new feeder(new TalonFX(51));
+    public final autodispense m_autodispense = new autodispense(dispenser);
+    public final autodispenseMax m_autodispenseMax = new autodispenseMax(dispenser);
 
     public RobotContainer() {
         configureBindings();
@@ -65,6 +70,9 @@ public class RobotContainer {
         numCyclesChooser.addOption("Two Cycles", "2");
         numCyclesChooser.addOption("Three Cycles", "3");
         SmartDashboard.putData(numCyclesChooser);
+
+        NamedCommands.registerCommand("autodispense", m_autodispense);
+        NamedCommands.registerCommand("autodispenseMax", m_autodispenseMax);
     }
 
     private void configureBindings() {
