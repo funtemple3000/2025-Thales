@@ -11,6 +11,8 @@ import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 import com.pathplanner.lib.auto.NamedCommands;
 
+
+
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 
@@ -49,7 +51,7 @@ public class RobotContainer {
     private static final String kCycleLeft = "CycleLeft";
     private static final String kCycleRight = "CycleRight";
     private static final String kCycleCenter = "CycleCenter";
-    private static final String kPracticeAuto = "PracticeAuto";
+    private static final String kPracticeAuto = "Practice Auto";
     private final SendableChooser<String> autoChooser = new SendableChooser<>();
     private final SendableChooser<String> numCyclesChooser = new SendableChooser<>();
 
