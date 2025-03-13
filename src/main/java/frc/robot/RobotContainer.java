@@ -50,7 +50,7 @@ public class RobotContainer {
     private static final String kNoAuto = "NoAuto";
     private static final String kCycleLeft = "CycleLeft";
     private static final String kCycleRight = "CycleRight";
-    private static final String kCycleCenter = "CycleCenter";
+    private static final String kCycleCenter = "CycleCenter1";
     private static final String kPracticeAuto = "Practice Auto";
     private final SendableChooser<String> autoChooser = new SendableChooser<>();
     private final SendableChooser<String> numCyclesChooser = new SendableChooser<>();
@@ -62,16 +62,15 @@ public class RobotContainer {
     public RobotContainer() {
         configureBindings();
         autoChooser.setDefaultOption("No Auto", kNoAuto);
-        autoChooser.addOption("Cycle Left", kCycleLeft);
-        autoChooser.addOption("Cycle Right", kCycleRight);
+        autoChooser.addOption("Cycle Left 1", kCycleLeft + "1");
+        autoChooser.addOption("Cycle Left 2", kCycleLeft + "2");
+        autoChooser.addOption("Cycle Left 3", kCycleLeft + "3");
+        autoChooser.addOption("Cycle Right 1", kCycleRight + "1");
+        autoChooser.addOption("Cycle Right 2", kCycleRight + "2");
+        autoChooser.addOption("Cycle Right 3", kCycleRight + "3");
         autoChooser.addOption("Cycle Center", kCycleCenter);
         autoChooser.addOption("Practice Auto (Practice Only)", kPracticeAuto);
         SmartDashboard.putData(autoChooser);
-
-        numCyclesChooser.setDefaultOption("One Cycle", "1");
-        numCyclesChooser.addOption("Two Cycles", "2");
-        numCyclesChooser.addOption("Three Cycles", "3");
-        SmartDashboard.putData(numCyclesChooser);
 
         NamedCommands.registerCommand("autodispense", m_autodispense);
         NamedCommands.registerCommand("autodispenseMax", m_autodispenseMax);
@@ -128,16 +127,8 @@ public class RobotContainer {
 
     public Command getAutonomousCommand() {
         String autoSelected = autoChooser.getSelected();
-        String cyclesSelected = numCyclesChooser.getSelected();
-
-        // Note: Cycle Center only has 1 cycle.
-        if (autoSelected.equals(kCycleCenter)){
-            cyclesSelected = "1";
-        }
-        if (autoSelected.equals(kPracticeAuto)){
-            cyclesSelected = ""; // Practice auto does not have "cycles"
-        }
-        PathPlannerAuto pathAuto = new PathPlannerAuto(autoSelected + cyclesSelected);
+        
+        PathPlannerAuto pathAuto = new PathPlannerAuto(autoSelected);
         return pathAuto;
     }
 }
