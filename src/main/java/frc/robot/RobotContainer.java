@@ -118,6 +118,14 @@ public class RobotContainer {
             Commands.runOnce(()->
             dispenser.stop())
         );
+        joystick.y().toggleOnTrue(
+            Commands.runOnce(()->
+            dispenser.hold())
+        );
+        joystick.y().toggleOnFalse(
+            Commands.runOnce(()->
+            dispenser.hold())
+        );
 
         // reset the field-centric heading on left bumper press
         joystick.leftBumper().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
