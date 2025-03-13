@@ -102,12 +102,12 @@ public class RobotContainer {
         joystick.start().and(joystick.y()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kForward));
         joystick.start().and(joystick.x()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kReverse));
 
-        joystick.rightBumper().onTrue(
+        joystick.rightTrigger().onTrue(
             Commands.runOnce(()->
             dispenser.dispense())
         );
 
-        joystick.rightBumper().onFalse(
+        joystick.rightTrigger().onFalse(
             Commands.runOnce(()->
             dispenser.stop())
         );
@@ -115,7 +115,6 @@ public class RobotContainer {
             Commands.runOnce(()->
             dispenser.gimmemorpowa())
         );
-
         joystick.x().onFalse(
             Commands.runOnce(()->
             dispenser.stop())
@@ -124,7 +123,7 @@ public class RobotContainer {
             Commands.runOnce(()-> 
             dispenser.stop())
         );
-        joystick.rightTrigger().onTrue(
+        joystick.leftTrigger().onTrue(
             Commands.runOnce(()->
             dispenser.hold())
         );
