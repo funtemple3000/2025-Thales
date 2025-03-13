@@ -124,7 +124,7 @@ public class RobotContainer {
         );
         joystick.y().toggleOnFalse(
             Commands.runOnce(()->
-            dispenser.hold())
+            dispenser.stop())
         );
 
         // reset the field-centric heading on left bumper press
