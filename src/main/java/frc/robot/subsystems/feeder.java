@@ -10,5 +10,7 @@ public class feeder {
     }
     public void dispense(){ motorD.set(-0.1); }
     public void gimmemorpowa(){ motorD.set(-0.15); }
+    public void hold(){ motorD.set(0.05); }
+    // Above: Idle function to prevent problems
     public void stop(){ motorD.set(0.0); }
 }

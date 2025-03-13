@@ -58,6 +58,7 @@ public class RobotContainer {
     public final feeder dispenser = new feeder(new TalonFX(51));
     public final autodispense m_autodispense = new autodispense(dispenser);
     public final autodispenseMax m_autodispenseMax = new autodispenseMax(dispenser);
+    public boolean b_hold = false;
 
     public RobotContainer() {
         configureBindings();
@@ -74,6 +75,7 @@ public class RobotContainer {
 
         NamedCommands.registerCommand("autodispense", m_autodispense);
         NamedCommands.registerCommand("autodispenseMax", m_autodispenseMax);
+    
     }
 
     private void configureBindings() {
@@ -118,13 +120,13 @@ public class RobotContainer {
             Commands.runOnce(()->
             dispenser.stop())
         );
-        joystick.y().toggleOnTrue(
+        joystick.y().onTrue(
+            Commands.runOnce(()-> 
+            dispenser.stop())
+        );
+        joystick.rightTrigger().onTrue(
             Commands.runOnce(()->
             dispenser.hold())
-        );
-        joystick.y().toggleOnFalse(
-            Commands.runOnce(()->
-            dispenser.stop())
         );
 
         // reset the field-centric heading on left bumper press
