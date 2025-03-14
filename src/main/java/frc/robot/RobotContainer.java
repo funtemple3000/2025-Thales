@@ -55,7 +55,7 @@ public class RobotContainer {
     private final SendableChooser<String> autoChooser = new SendableChooser<>();
     private final SendableChooser<String> numCyclesChooser = new SendableChooser<>();
 
-    public final feeder dispenser = new feeder(new TalonFX(51));
+    public final feeder dispenser = new feeder(new TalonFX(40));
     public final autodispense m_autodispense = new autodispense(dispenser);
     public final autodispenseMax m_autodispenseMax = new autodispenseMax(dispenser);
     public boolean b_hold = false;
