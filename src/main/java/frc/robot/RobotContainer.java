@@ -111,11 +111,11 @@ public class RobotContainer {
             Commands.runOnce(()->
             dispenser.stop())
         );
-        joystick.x().onTrue(
+        joystick.rightBumper().onTrue(
             Commands.runOnce(()->
             dispenser.gimmemorpowa())
         );
-        joystick.x().onFalse(
+        joystick.rightBumper().onFalse(
             Commands.runOnce(()->
             dispenser.stop())
         );
@@ -126,6 +126,14 @@ public class RobotContainer {
         joystick.leftTrigger().onTrue(
             Commands.runOnce(()->
             dispenser.hold())
+        );
+        joystick.x().onTrue(
+            Commands.runOnce(()->
+            dispenser.morpowaMAX())
+        );
+        joystick.x().onFalse(
+            Commands.runOnce(()->
+            dispenser.stop())
         );
 
         // reset the field-centric heading on left bumper press
