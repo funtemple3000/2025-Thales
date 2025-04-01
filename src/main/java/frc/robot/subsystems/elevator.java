@@ -17,6 +17,7 @@ public class elevator extends ProfiledPIDSubsystem {
     new ElevatorFeedforward(0, 0, 0, 0);
     // Substitute values, exchange when available
 
+    @SuppressWarnings("removal")
     public elevator() {
         super(
             new ProfiledPIDController(
