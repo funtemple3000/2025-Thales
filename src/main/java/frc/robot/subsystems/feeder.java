@@ -2,7 +2,9 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.*;
 import com.ctre.phoenix6.hardware.TalonFX;
 
-
+/*
+ * This file is to be deprecated once elevator version of bot is complete
+ */
 public class feeder {
     private TalonFX motorD;
     public feeder(TalonFX motor1){
