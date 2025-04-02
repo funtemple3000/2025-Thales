@@ -28,6 +28,7 @@ import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.feeder;
 import frc.robot.subsystems.elevator;
+import frc.robot.subsystems.elevator_PS;
 import frc.robot.commands.autodispense;
 import frc.robot.commands.autodispenseMax;
 
@@ -59,7 +60,7 @@ public class RobotContainer {
     private final SendableChooser<String> autoChooser = new SendableChooser<>();
     private final SendableChooser<String> numCyclesChooser = new SendableChooser<>();
 
-    public final elevator m_elevator = new elevator();
+    public final elevator_PS m_elevator = new elevator_PS();
     public final feeder dispenser = new feeder(new TalonFX(40));
     public final autodispense m_autodispense = new autodispense(dispenser);
     public final autodispenseMax m_autodispenseMax = new autodispenseMax(dispenser);
@@ -83,6 +84,7 @@ public class RobotContainer {
     
     }
 
+    @SuppressWarnings("removal")
     private void configureBindings() {
         // Note that X is defined as forward according to WPILib convention,
         // and Y is defined as to the left according to WPILib convention.
@@ -107,40 +109,32 @@ public class RobotContainer {
         joystick1.start().and(joystick1.y()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kForward));
         joystick1.start().and(joystick1.x()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kReverse));
 
-        joystick.rightTrigger().onTrue(
-            Commands.runOnce(()->
-            dispenser.dispense())
-        );
+        joystick2.x().onTrue(
+        Commands.runOnce(() -> {
+        m_elevator.setGoal(-26);
+        m_elevator.enable();
+        },
+        m_elevator));
 
-        joystick.rightTrigger().onFalse(
-            Commands.runOnce(()->
-            dispenser.stop())
-        );
-        joystick.rightBumper().onTrue(
+        joystick2.x().onFalse(
+        Commands.runOnce(() -> {
+        m_elevator.setGoal(0);
+        },
+        m_elevator));
+
+        joystick2.rightTrigger().onTrue(
             Commands.runOnce(()->
             dispenser.gimmemorpowa())
         );
-        joystick.rightBumper().onFalse(
-            Commands.runOnce(()->
-            dispenser.stop())
-        );
-        joystick.y().onTrue(
-            Commands.runOnce(()-> 
-            dispenser.stop())
-        );
-        joystick.leftTrigger().onTrue(
-            Commands.runOnce(()->
-            dispenser.hold())
-        );
-        joystick.x().onTrue(
-            Commands.runOnce(()->
-            dispenser.morpowaMAX())
-        );
-        joystick.x().onFalse(
+        joystick2.rightTrigger().onFalse(
             Commands.runOnce(()->
             dispenser.stop())
         );
 
+       
+        
+
+       
         // reset the field-centric heading on left bumper press
         joystick1.a().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
 
