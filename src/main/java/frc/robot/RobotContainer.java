@@ -109,6 +109,7 @@ public class RobotContainer {
         joystick1.start().and(joystick1.y()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kForward));
         joystick1.start().and(joystick1.x()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kReverse));
 
+        // Elevator Controls
         joystick2.y().onTrue(
         Commands.runOnce(() -> {
         m_elevator.setGoal(-26);
@@ -135,12 +136,21 @@ public class RobotContainer {
         },
         m_elevator));
 
-        
+        // Dispenser controls
         joystick2.rightTrigger().onTrue(
             Commands.runOnce(()->
             dispenser.gimmemorpowa())
         );
         joystick2.rightTrigger().onFalse(
+            Commands.runOnce(()->
+            dispenser.stop())
+        );
+
+        joystick2.leftTrigger().onTrue(
+            Commands.runOnce(()->
+            dispenser.reverse())
+        );
+        joystick2.leftTrigger().onFalse(
             Commands.runOnce(()->
             dispenser.stop())
         );

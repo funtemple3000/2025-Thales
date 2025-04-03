@@ -11,8 +11,8 @@ public class feeder {
         this.motorD = motor1;
     }
     public void dispense(){ motorD.set(-0.1); }
-    public void gimmemorpowa(){ motorD.set(-0.15); }
-    public void morpowaMAX(){ motorD.set(-0.25); }
+    public void gimmemorpowa(){ motorD.set(-0.18); }
+    public void reverse(){ motorD.set(0.12); }
     // MOH POWA
     public void hold(){ motorD.set(0.05); }
     // Above: Idle function to prevent problems
