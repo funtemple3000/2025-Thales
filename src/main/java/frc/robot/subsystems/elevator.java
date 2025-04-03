@@ -23,6 +23,9 @@ public class elevator extends SubsystemBase{
     new ElevatorFeedforward(0, 0.0, 0, 0);
     // Substitute values, exchange when available
 
+    /*
+     * NOT USED FOR TNSM REGIONAL
+     */
     public elevator() {
         m_Constraints = new TrapezoidProfile.Constraints(
             3,
@@ -69,7 +72,7 @@ public class elevator extends SubsystemBase{
     }
     
     public double getMeasurement() {
-        return (m_encoder.getDifferentialAveragePosition().getValueAsDouble());
+        return (m_encoder.getPosition().getValueAsDouble());
     }
     
 }

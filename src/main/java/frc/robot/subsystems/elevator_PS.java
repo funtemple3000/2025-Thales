@@ -1,6 +1,5 @@
 package frc.robot.subsystems;
 
-import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.ElevatorFeedforward;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
@@ -15,7 +14,14 @@ public class elevator_PS extends ProfiledPIDSubsystem {
 
   private final ElevatorFeedforward m_feedforward =
       new ElevatorFeedforward(
-          0, 0, 0, 0);
+          0, 0.2, 0, 0);
+  // NOTE: Untested FF value 4/2
+
+  /*
+   * DEPRECATED SUBSYSTEM
+   * Use for TNSM 
+   * Exchange post-2025 season
+   */
 
   @SuppressWarnings("removal")
   public elevator_PS() {
@@ -45,5 +51,12 @@ public class elevator_PS extends ProfiledPIDSubsystem {
   public double getMeasurement() {
     System.out.println(m_encoder.getPosition().getValueAsDouble());
     return (m_encoder.getPosition().getValueAsDouble());
+  }
+
+  @SuppressWarnings("removal")
+  public void eStop(){
+    disable();
+    m_motor_left.set(0.0);
+    m_motor_right.set(0.0);
   }
 }
