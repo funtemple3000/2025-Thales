@@ -2,7 +2,6 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.elevator_PS;
-import edu.wpi.first.wpilibj.Timer;
 
 public class autodown extends Command {
     private elevator_PS m_elevator;
