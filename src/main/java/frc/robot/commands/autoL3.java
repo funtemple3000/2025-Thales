@@ -32,6 +32,6 @@ public class autoL3 extends Command {
 
     @Override
     public boolean isFinished(){
-        return timer.hasElapsed(2.2);
+        return timer.hasElapsed(2.5);
     }
 }
