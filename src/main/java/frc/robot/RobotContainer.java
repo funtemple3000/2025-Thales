@@ -29,8 +29,10 @@ import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.feeder;
 import frc.robot.subsystems.elevator;
 import frc.robot.subsystems.elevator_PS;
+import frc.robot.commands.autoL3up;
 import frc.robot.commands.autodispense;
 import frc.robot.commands.autodispenseMax;
+import frc.robot.commands.autodown;
 
 
 public class RobotContainer {
@@ -64,6 +66,8 @@ public class RobotContainer {
     public final feeder dispenser = new feeder(new TalonFX(40));
     public final autodispense m_autodispense = new autodispense(dispenser);
     public final autodispenseMax m_autodispenseMax = new autodispenseMax(dispenser);
+    public final autoL3up m_autoL3up = new autoL3up(m_elevator);
+    public final autodown m_autodown = new autodown(m_elevator);
     public boolean b_hold = false;
 
     public RobotContainer() {
@@ -81,6 +85,8 @@ public class RobotContainer {
 
         NamedCommands.registerCommand("autodispense", m_autodispense);
         NamedCommands.registerCommand("autodispenseMax", m_autodispenseMax);
+        NamedCommands.registerCommand("autoL3up", m_autoL3up);
+        NamedCommands.registerCommand("autodown", m_autodown);
     
     }
 
@@ -155,9 +161,10 @@ public class RobotContainer {
             dispenser.stop())
         );
 
-       
-        
-
+        joystick2.b().onTrue(
+            Commands.runOnce(()->
+            m_elevator.encoder_reset())
+        );
        
         // reset the field-centric heading on left bumper press
         joystick1.a().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));

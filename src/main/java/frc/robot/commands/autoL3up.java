@@ -23,8 +23,13 @@ public class autoL3up extends Command {
     @SuppressWarnings("removal")
     public void execute(){
         m_elevator.setGoal(-26);
+        m_elevator.enable();
     }
 
+    @Override
+    public void end(boolean interrupted){
+        timer.stop();
+    }
     @Override
     public boolean isFinished(){
         return timer.hasElapsed(2.5);

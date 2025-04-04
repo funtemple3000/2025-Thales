@@ -23,6 +23,12 @@ public class autodown extends Command {
     @SuppressWarnings("removal")
     public void execute(){
         m_elevator.setGoal(0.0);
+        m_elevator.enable();
+    }
+
+    @Override
+    public void end(boolean interrupted){
+        timer.stop();
     }
 
     @Override
