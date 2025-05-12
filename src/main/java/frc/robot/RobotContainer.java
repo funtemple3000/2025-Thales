@@ -29,8 +29,10 @@ import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.feeder;
 import frc.robot.subsystems.elevator;
 import frc.robot.subsystems.elevator_PS;
+import frc.robot.commands.autoL3up;
 import frc.robot.commands.autodispense;
 import frc.robot.commands.autodispenseMax;
+import frc.robot.commands.autodown;
 
 
 public class RobotContainer {
@@ -64,6 +66,8 @@ public class RobotContainer {
     public final feeder dispenser = new feeder(new TalonFX(40));
     public final autodispense m_autodispense = new autodispense(dispenser);
     public final autodispenseMax m_autodispenseMax = new autodispenseMax(dispenser);
+    public final autoL3up m_autoL3up = new autoL3up(m_elevator);
+    public final autodown m_autodown = new autodown(m_elevator);
     public boolean b_hold = false;
 
     public RobotContainer() {
@@ -81,6 +85,8 @@ public class RobotContainer {
 
         NamedCommands.registerCommand("autodispense", m_autodispense);
         NamedCommands.registerCommand("autodispenseMax", m_autodispenseMax);
+        NamedCommands.registerCommand("autoL3up", m_autoL3up);
+        NamedCommands.registerCommand("autodown", m_autodown);
     
     }
 
@@ -91,9 +97,9 @@ public class RobotContainer {
         drivetrain.setDefaultCommand(
             // Drivetrain will execute this command periodically
             drivetrain.applyRequest(() ->
-                drive.withVelocityX(joystick1.getLeftY() * MaxSpeed) // Drive forward with negative Y (forward)
-                    .withVelocityY(joystick1.getLeftX() * MaxSpeed) // Drive left with negative X (left)
-                    .withRotationalRate(-joystick1.getRightX() * MaxAngularRate) // Drive counterclockwise with negative X (left)
+                drive.withVelocityX(joystick1.getLeftY() * MaxSpeed * .75) // Drive forward with negative Y (forward)
+                    .withVelocityY(joystick1.getLeftX() * MaxSpeed * .75) // Drive left with negative X (left)
+                    .withRotationalRate(-joystick1.getRightX() * MaxAngularRate * .7) // Drive counterclockwise with negative X (left)
             )
         );
 
@@ -109,6 +115,7 @@ public class RobotContainer {
         joystick1.start().and(joystick1.y()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kForward));
         joystick1.start().and(joystick1.x()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kReverse));
 
+        // Elevator Controls
         joystick2.y().onTrue(
         Commands.runOnce(() -> {
         m_elevator.setGoal(-26);
@@ -135,7 +142,7 @@ public class RobotContainer {
         },
         m_elevator));
 
-        
+        // Dispenser controls
         joystick2.rightTrigger().onTrue(
             Commands.runOnce(()->
             dispenser.gimmemorpowa())
@@ -145,9 +152,19 @@ public class RobotContainer {
             dispenser.stop())
         );
 
-       
-        
+        joystick2.leftTrigger().onTrue(
+            Commands.runOnce(()->
+            dispenser.reverse())
+        );
+        joystick2.leftTrigger().onFalse(
+            Commands.runOnce(()->
+            dispenser.stop())
+        );
 
+        joystick2.b().onTrue(
+            Commands.runOnce(()->
+            m_elevator.encoder_reset())
+        );
        
         // reset the field-centric heading on left bumper press
         joystick1.a().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));

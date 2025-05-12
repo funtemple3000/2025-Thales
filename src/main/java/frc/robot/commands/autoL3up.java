@@ -1,14 +1,14 @@
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.elevator_PS;
-import edu.wpi.first.wpilibj.Timer;
 
-public class autoL3 extends Command {
+public class autoL3up extends Command {
     private elevator_PS m_elevator;
     private Timer timer;
 
-    public autoL3(elevator_PS L){
+    public autoL3up(elevator_PS L){
         this.m_elevator = L;
         this.timer = new Timer();
     }
@@ -23,15 +23,15 @@ public class autoL3 extends Command {
     @SuppressWarnings("removal")
     public void execute(){
         m_elevator.setGoal(-26);
+        m_elevator.enable();
     }
 
     @Override
     public void end(boolean interrupted){
-        m_elevator.eStop();
+        timer.stop();
     }
-
     @Override
     public boolean isFinished(){
-        return timer.hasElapsed(2.2);
+        return timer.hasElapsed(2.5);
     }
 }

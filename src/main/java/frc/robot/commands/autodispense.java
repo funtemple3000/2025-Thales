@@ -18,13 +18,13 @@ public class autodispense extends Command{
     @Override
     public void initialize(){
         timer.reset();
-        timer.start(    );
+        timer.start();
     }
 
     // actual command
     @Override
     public void execute(){
-        dispenser.dispense();
+        dispenser.gimmemorpowa();
     }
 
     // in case of an interuption if interrupted boolean changed will halt action

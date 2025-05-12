@@ -14,8 +14,9 @@ public class elevator_PS extends ProfiledPIDSubsystem {
 
   private final ElevatorFeedforward m_feedforward =
       new ElevatorFeedforward(
-          0, 0.2, 0, 0);
+          0, 0.0, 0.0, 0);
   // NOTE: Untested FF value 4/2
+  // old .2
 
   /*
    * DEPRECATED SUBSYSTEM
@@ -27,11 +28,11 @@ public class elevator_PS extends ProfiledPIDSubsystem {
   public elevator_PS() {
     super(
         new ProfiledPIDController(
-            3.5,
-            2.0,
-            0,
+            1.2, //old 3.5
+            0.0, // old 2.0
+            0.0,
             new TrapezoidProfile.Constraints(
-              19,
+              25,
                 25)),
         0);
     setGoal(0.0);
@@ -49,8 +50,11 @@ public class elevator_PS extends ProfiledPIDSubsystem {
 
   @Override
   public double getMeasurement() {
-    System.out.println(m_encoder.getPosition().getValueAsDouble());
     return (m_encoder.getPosition().getValueAsDouble());
+  }
+
+  public void encoder_reset(){
+    m_encoder.setPosition(0.0);
   }
 
   @SuppressWarnings("removal")
